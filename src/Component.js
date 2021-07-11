@@ -86,23 +86,6 @@ export default function OrderGroupGrid(props) {
         setRows({ data: newData });
     }
 
-    const columns = [
-        { width: 40, maxWidth: 40, label: "", dataKey: "open", flexGrow: 1 },
-        {
-            width: 200,
-            label: "Order Group Description",
-            dataKey: "description",
-            flexGrow: 1
-        },
-        { width: 100, label: "Item Number", dataKey: "itemNumber", flexGrow: 1 },
-        {
-            width: 200,
-            label: "Item Description",
-            dataKey: "itemDescription",
-            flexGrow: 1
-        },
-        { width: 60, label: "", dataKey: "select", flexGrow: 1 }
-    ];
 
     let rowCount = rows && rows.data ? rows.data.length : 0;
 
@@ -112,7 +95,7 @@ export default function OrderGroupGrid(props) {
                 <VirtualizedTable
                     rowCount={rowCount}
                     rowGetter={({ index }) => rows.data[index]}
-                    columns={columns}
+                    columns={props.columns}
                     expand={expRow}
                     rowSelected={selectRow}
                     onRowClick={rowClick}
