@@ -8,20 +8,16 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import CheckIcon from "@material-ui/icons/Check";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
-
-
-const MuiVirtualizedTable = (props) => {
-
-    const {
-        classes,
-        columns,
-        rowHeight,
-        headerHeight,
-        key,
-        expand,
-        rowSelected,
-        ...tableProps
-    } = props;
+const MuiVirtualizedTable = ({
+    classes,
+    columns,
+    rowHeight,
+    headerHeight,
+    key,
+    expand,
+    rowSelected,
+    ...tableProps
+}) => {
 
     const getRowClassName = ({ index }) => {
         return clsx(classes.tableRow, classes.flexContainer, {
@@ -29,17 +25,16 @@ const MuiVirtualizedTable = (props) => {
         });
     };
 
-    const cellRenderer = props => {
-        const { cellData, columnIndex } = props;
-
-        const style = props.rowData.child
+    const cellRenderer = ({ cellData, columnIndex, rowData, dataKey }) => {
+       
+        const style = rowData.child
             ? { height: rowHeight, backgroundColor: "#E8E8E8" }
             : { height: rowHeight, paddingLeft: 8, paddingRight: 4 };
 
-        let isChild = props.rowData.child;
-        let isExpanded = props.rowData.open;
+        let isChild = rowData.child;
+        let isExpanded = rowData.open;
 
-        if (props.dataKey === "open") {
+        if (dataKey === "open") {
             return (
                 <TableCell
                     component="div"
@@ -58,7 +53,7 @@ const MuiVirtualizedTable = (props) => {
                         <div />
                     ) : (
                         <IconButton
-                            onClick={event => expand(props.rowData)}
+                            onClick={event => expand(rowData)}
                             className={classes.button}
                         >
                             {isExpanded ? (
@@ -70,7 +65,7 @@ const MuiVirtualizedTable = (props) => {
                     )}
                 </TableCell>
             );
-        } else if (props.dataKey === "select") {
+        } else if (dataKey === "select") {
             return (
                 <TableCell
                     component="div"
@@ -89,7 +84,7 @@ const MuiVirtualizedTable = (props) => {
                         <div />
                     ) : (
                         <IconButton
-                            onClick={() => rowSelected(props.rowData)}
+                            onClick={() => rowSelected(rowData)}
                             className={classes.button}
                         >
                             <CheckIcon fontSize="inherit" style={{ color: "#D71920" }} />
